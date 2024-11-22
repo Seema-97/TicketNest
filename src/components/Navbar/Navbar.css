@@ -1,0 +1,79 @@
+
+/* style of sidenavbar */
+.MuiDrawer-paper{
+        border :none !important;
+        background-color: rgb(174, 198, 205) !important;
+        color: black !important;
+}
+
+/* style of user profile who has logged in */
+.login-user-detail-box{
+       display:flex;
+       align-items:center ;
+       margin-top: 35px;
+       margin-bottom:-55px; 
+       gap:10px;
+       margin-left:30px}
+
+
+.login-user-profile-pic{
+    width:40px;
+    height:40px;
+    border-radius: 50%;
+    background-color: rgb(189, 54, 99)!important;
+    color:white ;
+    display:flex;
+    align-items:center;
+    justify-content:center
+}
+
+
+/* style of app logo in navbar */
+.app-logo-box{
+   height:70px;
+   display:flex;
+   align-items:center;
+   justify-content:center ;
+   margin-left:auto;
+   margin-right:40px;
+}
+
+.nav-logo-img{
+  height:46px; 
+  width:46px ;
+  object-fit:contain
+}
+
+.nav-logo-name{
+    height:50px; 
+    width:170px ;
+    object-fit:contain ;
+  }
+
+  .main-display-box{
+   border:none;
+   background-color: rgb(245, 245, 245); 
+   min-height:90.8vh;
+   display:flex;
+   align-items: center;
+   justify-content: center;
+   /* border:2px solid green; */
+  }
+
+
+
+/* @media screen and (max-width: 600px) {
+    body {
+      background-color: blue;
+    }
+
+    .header .navLogo{
+        display: block;
+        width:200px;
+        height:50px
+    }
+
+    .sideNavbar .navLogo{
+        display: none;
+    }
+  } */

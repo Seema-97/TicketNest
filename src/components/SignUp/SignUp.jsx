@@ -30,7 +30,8 @@ const SignUp = () => {
   }
 
   const provider = new GoogleAuthProvider();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+ 
 
   const handleSignUP = async(e) => {
      e.preventDefault()
@@ -38,6 +39,8 @@ const SignUp = () => {
     try{
 
           const result = await signInWithPopup(auth, provider);
+          localStorage.setItem("currentUser" , JSON.stringify(auth.currentUser));
+
             const user = result.user;
 
             // Store Client details in Firestore

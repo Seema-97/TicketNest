@@ -1,0 +1,69 @@
+
+.addTicket-container{
+    /* padding-left:50px; */
+    width:100%;
+    /* border:2px solid red; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.form-main-box{
+    width:70%;
+    margin-inline: auto;
+    /* border:2px solid blue; */
+    /* padding-left: 50px; */
+}
+
+.title-box{
+    display: flex;
+    align-items: center;
+}
+
+.title{
+    flex-grow: 1;
+}
+
+.addTicket-container label {
+    display: inline-block;
+    width:120px;
+    /* border:2px solid brown */
+}
+
+.divider{
+    width:100% !important;
+    margin-bottom: 26px !important;
+    font-size:20px;
+}
+
+.form-mid{
+    display: flex;
+    justify-content: space-between;
+    /* border:2px solid green; */
+    flex-wrap: wrap;
+    margin:10px 0;
+    gap:10px 0;
+}
+
+.mini-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    /* border:2px solid rgb(144, 97, 105) !important; */
+}
+
+.ticket-submit-btn{
+    width:180px !important;
+    border-radius: 8px !important;
+    margin-top:25px!important
+}
+
+
+/* ticket submit .animated-button  */
+
+
+
+

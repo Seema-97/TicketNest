@@ -1,24 +1,20 @@
 import { doc, getDoc} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { auth, fireStoreDb } from '../../firebase.config'
-import { useNavigate } from 'react-router-dom'
-
-
-
+import { fireStoreDb } from '../../firebase.config'
+import Navbar from '../Navbar/Navbar'
+import { useMyContext } from '../../context/context'
 
 
 const Profile = () => {
-    const[userDetails , setUserDetails] = useState();
-  
- 
+    const useMyContextData = useMyContext()
+    const{userDetails , setUserDetails} = useMyContextData;
+    
     useEffect(()=> {
       fetchUserData()
     } , [])
 
-    const fetchUserData = () =>{
-        auth.onAuthStateChanged(async(user)=>{
-           console.log(user)
-          
+    const fetchUserData = async() =>{
+                 
            const docRef = doc(fireStoreDb, "Users", localStorage.getItem('userEmployeeId'));
            const docSnap = await getDoc(docRef);
            if (docSnap.exists()) {
@@ -26,30 +22,14 @@ const Profile = () => {
             console.log(docSnap.data())
            } else {
                console.log('no user data found')
-               // docSnap.data() will be undefined in this case
-               // console.log("No such document!");
            }
-        })
-    }
+        }
+   
+    console.log(userDetails)
       
-    const navigate = useNavigate()
-
-    // const handleLogout = async() => {
-    //    try{
-    //     await auth.signOut();
-    //     navigate('/login')
-    //    }
-    //    catch(error){
-    //     console.log(error.message)
-    //    }
-
-    // }
-
   return (
-    <>
-    {userDetails?.isAuthorisedField === 'pending'?( <div><p>Hi.. {userDetails && userDetails.firstname} your account approval is pending</p> </div> ): <div><p>Welcome {userDetails && userDetails.firstname} to client portal.</p> </div>}
-   
-   
+    <> 
+    {userDetails && <Navbar />}
     </>
   )
 }

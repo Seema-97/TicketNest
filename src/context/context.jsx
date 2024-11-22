@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const myContext = createContext();
 
@@ -9,14 +9,10 @@ export const useMyContext = () => {
 const ContextProvider = ({ children }) => {
 
     const[employeeId , setEmployeeId] = useState() ;
-
-    // useEffect(
-    //     () => {
-    //        localStorage.setItem("employeeId" , employeeId)
-    //     } , [employeeId]
-    // )
-
-  return <myContext.Provider value={{employeeId , setEmployeeId}}>{children}</myContext.Provider>;
+    const[userDetails , setUserDetails] = useState();
+  console.log(userDetails)
+  
+  return <myContext.Provider value={{employeeId , setEmployeeId , userDetails , setUserDetails }}>{children}</myContext.Provider>;
 };
 
 

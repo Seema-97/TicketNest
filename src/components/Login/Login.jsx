@@ -2,7 +2,7 @@
 import React, {useState } from 'react'
 import loginImg from '../../images/login-vector.png'
 import { useNavigate } from 'react-router-dom'
-import {fireStoreDb} from '../../firebase.config'
+import {auth, fireStoreDb} from '../../firebase.config'
 import { doc,getDoc} from 'firebase/firestore'
 import { useMyContext } from '../../context/context'
 
@@ -31,7 +31,9 @@ const{employeeId ,setEmployeeId} = useMyContextData ;
                 const userPassword = userData.password; // Get the password associated with the employee ID
 
                 if(userPassword === password) {
-                  navigate('/profile');
+                  localStorage.setItem("currentUser" , JSON.stringify(auth.currentUser));
+                  console.log(auth.currentUser)
+                  navigate('/profile/*');
                 }
                 else{
                   alert('you have entered wrong password')
