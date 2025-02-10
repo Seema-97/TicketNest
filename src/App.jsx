@@ -6,18 +6,15 @@ import Profile from './components/Profile/Profile'
 
 function App() {
  
-
   return (
 
     <>
     
-  
-      <Routes>
+     <Routes>
      <Route path='/' element = {<SignUp/>} />
      <Route path='/login' element = {<Login/>} />
      <Route path='/profile/*' element= {<Profile/>} />
      </Routes>
-  
     
     </>
   )

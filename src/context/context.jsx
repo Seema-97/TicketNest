@@ -10,7 +10,7 @@ const ContextProvider = ({ children }) => {
 
     const[employeeId , setEmployeeId] = useState() ;
     const[userDetails , setUserDetails] = useState();
-  console.log(userDetails)
+ 
   
   return <myContext.Provider value={{employeeId , setEmployeeId , userDetails , setUserDetails }}>{children}</myContext.Provider>;
 };

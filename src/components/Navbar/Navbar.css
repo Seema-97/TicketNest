@@ -1,10 +1,15 @@
 
 /* style of sidenavbar */
+
 .MuiDrawer-paper{
         border :none !important;
         background-color: rgb(174, 198, 205) !important;
         color: black !important;
 }
+
+/* .MuiBox-root{
+  background-color:green;
+} */
 
 /* style of user profile who has logged in */
 .login-user-detail-box{
@@ -50,19 +55,19 @@
     object-fit:contain ;
   }
 
+
   .main-display-box{
    border:none;
    background-color: rgb(245, 245, 245); 
-   min-height:90.8vh;
+   min-height: calc(100vh - 64px);
    display:flex;
    align-items: center;
    justify-content: center;
-   /* border:2px solid green; */
   }
 
 
 
-/* @media screen and (max-width: 600px) {
+@media screen and (max-width: 600px) {
     body {
       background-color: blue;
     }
@@ -76,4 +81,4 @@
     .sideNavbar .navLogo{
         display: none;
     }
-  } */
+  }

@@ -21,7 +21,6 @@ const Logout = () => {
     <Typography className='text'>Are you sure you want to logout?</Typography>
     <Button onClick={handleLogout} variant='contained' className='primary-btn'>LogOut</Button>
     </Box>
-     
     </>
    
   )

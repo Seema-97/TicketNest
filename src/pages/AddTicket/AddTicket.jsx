@@ -3,14 +3,14 @@ import './AddTicket.css'
 import { Divider , Button, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, Paper, Typography, TextField, Box, FormControl, Select, MenuItem, IconButton} from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search';
 import { addDoc, collection, doc, getDoc, getDocs, query, where} from 'firebase/firestore';
-import { fireStoreDb } from '../../firebase.config';
+import { fireStoreDb1} from '../../firebase.config';
 import { useMyContext } from '../../context/context';
 
 const AddTicket = () => {
 
   const [categoryValue, setCategoryValue] = useState('');
   const [priorityValue, setPriorityValue] = useState('');
-  const[pendingTickets , setPendingTickets] = useState([])
+  // const[pendingTickets , setPendingTickets] = useState([])
   const useMyContextData = useMyContext()
   const{userDetails} = useMyContextData
 
@@ -64,7 +64,7 @@ const AddTicket = () => {
    if(filledInput.employeeId === userDetails.employeeId){
   
       try{
-        const fetchedDoc = await getDoc(doc(fireStoreDb , 'Users' , filledInput.employeeId));
+        const fetchedDoc = await getDoc(doc(fireStoreDb1 , 'Users' , filledInput.employeeId));
         console.log(fetchedDoc)
         setFilledInput((prev) => {
           return{
@@ -80,7 +80,7 @@ const AddTicket = () => {
         }
     }
     else{
-    alert('incorrect employeeId')
+    alert('employee id does not exist')
    }
      
     }
@@ -89,11 +89,12 @@ const AddTicket = () => {
     const handleTicketSubmit = async() =>{
       
       try{
-         await addDoc(collection(fireStoreDb , 'Tickets') , {
+         await addDoc(collection(fireStoreDb1 , 'Tickets') , {
           ...filledInput
          })
 
         alert("ticket submitted")
+        clearForm()
       }
       catch(err){
         console.log(err.message)
@@ -101,34 +102,8 @@ const AddTicket = () => {
       
       clearForm() ;
       console.log('clear form')
-      
+
     }
-
-    //function for fetching pending Tickets data
-
-    useEffect(()=> {
-        getPendingTickets()
-    } , [])
-
-    const getPendingTickets = async() => {
-
-      const docRef = query(collection(fireStoreDb, "Tickets"),
-      where("ticketStatus", '==', "pending"))
-      const fetchedDoc = await getDocs(docRef);
-      const temp = []
-      
-      fetchedDoc.forEach((doc) => {
-        const data = {
-          id: doc.id ,
-          info: doc.data()
-        }
-        temp.push(data)
-      })
-      
-      setPendingTickets(temp)
-    }
-
-    console.log(pendingTickets)
 
   return (
    <>
@@ -144,11 +119,11 @@ const AddTicket = () => {
           padding:'40px'
         }}>
 
-        <Divider textAlign='center' className='divider'>Add Ticket</Divider>
+        <Divider className='ticket-form-heading'>Add Ticket</Divider>
 
           <Box className = 'title-box'>
             <label htmlFor="title">Title</label>
-            <TextField variant="outlined" id='title' className='title' name='title' onChange={handleChange}/>
+            <TextField variant="outlined" id='title' className='title' name='title' onChange={handleChange} value={filledInput.title}/>
           </Box>
 
           <Box className='form-mid'>
@@ -255,39 +230,7 @@ const AddTicket = () => {
       </Box>
     </form>
 
-    <Box className='Boxider'>
-    <p>Pending Tickets</p>
-    <hr></hr>
-    </Box> 
-
-   {pendingTickets &&
-     
-       <TableContainer component={Paper} sx={{ maxWidth: 1250 }}>
-              <Table sx={{ minWidth: 650 }}>
-                <TableHead>
-                  <TableRow>
-                    <TableCell>TicketId</TableCell>
-                    <TableCell>Title</TableCell>
-                    <TableCell>Category</TableCell>
-                    <TableCell>Priority</TableCell>
-                    <TableCell>Status</TableCell>
-                  </TableRow>
-                </TableHead>
-
-                {pendingTickets?.map((item) => 
-                (<TableBody key={item.id}>
-                    <TableRow >
-                        <TableCell>{item.id}</TableCell>
-                        <TableCell>{item.info.title}</TableCell>
-                        <TableCell>{item.info.category}</TableCell>
-                        <TableCell>{item.info.priority}</TableCell>
-                        <TableCell>{item.info.ticketStatus}</TableCell>
-                    </TableRow>        
-                </TableBody>))}
-              </Table>
-          </TableContainer>
-          
-          }
+    
     </Box>
     </>
   )

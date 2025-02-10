@@ -4,6 +4,7 @@
     border-radius:40px !important;
     padding:50px 20px;
     text-align:center;
+    box-shadow:rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset !important
 }
 
 .logout-logo-box{

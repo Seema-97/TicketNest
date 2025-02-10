@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import './SignUP.css'
 import loginImg from '../../images/login-vector.png'
 import { useNavigate } from 'react-router-dom'
-import { auth, fireStoreDb} from '../../firebase.config'
+import { auth, fireStoreDb1} from '../../firebase.config'
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth'
-import {doc,setDoc } from 'firebase/firestore'
+import {doc,getDoc,setDoc } from 'firebase/firestore'
 
 
 const SignUp = () => {
@@ -34,35 +34,41 @@ const SignUp = () => {
  
 
   const handleSignUP = async(e) => {
-     e.preventDefault()
-     
-    try{
-
-          const result = await signInWithPopup(auth, provider);
-          localStorage.setItem("currentUser" , JSON.stringify(auth.currentUser));
-
-            const user = result.user;
-
-            // Store Client details in Firestore
-            await setDoc(doc(fireStoreDb, "Users", userInput.employeeId), {
-              firstname : userInput.firstname,
-              lastname : userInput.lastname,
-              email: user.email,
-              uid: user.uid,
-              employeeId: userInput.employeeId,
-              password : userInput.password,
-              isAuthorisedField : 'pending'
-            });
-
-            console.log('User signed up successfully');
-            navigate('/login');
-  } catch (error) {
-            console.error('Sign up failed:', error.message);
-            alert('Sign up failed. Please try again.');
-  }
-
-
-  }
+    e.preventDefault();
+    
+    try {
+      // Check if the user already exists in the database
+      const userRef = doc(fireStoreDb1, "Users", userInput.employeeId);
+      const userDoc = await getDoc(userRef);
+  
+      if (userDoc.exists()) {
+        // If the document exists, show an alert that the user already exists
+        alert("User with this Employee ID already exists.");
+      } else {
+        // If the document does not exist, proceed with sign up
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+  
+        // Store Client details in Firestore
+        await setDoc(userRef, {
+          firstname: userInput.firstname,
+          lastname: userInput.lastname,
+          email: user.email,
+          uid: user.uid,
+          employeeId: userInput.employeeId,
+          password: userInput.password,
+          isAuthorisedField: 'pending'
+        });
+  
+        console.log('User signed up successfully');
+        navigate('/login');
+      }
+    } catch (error) {
+      console.error('Sign up failed:', error.message);
+      alert('Sign up failed. Please try again.');
+    }
+  };
+  
 
   return ( <>
 

@@ -30,10 +30,11 @@ import AddTicket from '../../pages/AddTicket/AddTicket';
 import MyTickets from '../../pages/MyTickets/MyTickets';
 import Messages from '../../pages/Messages/Messages';
 import MyProfile from '../../pages/MyProfile/MyProfile';
+import { useMediaQuery } from '@mui/material';
 
 
 
-const drawerWidth = 240;
+const drawerWidth = 210;
 
 function Navbar(props) {
   const { window } = props;
@@ -41,11 +42,12 @@ function Navbar(props) {
   const [isClosing, setIsClosing] = React.useState(false);
 
   const allTicketIcon = [<HomeIcon/>,<ListAltIcon/>,<AddIcon/>,<MessageIcon/>,<AccountBoxIcon/>,<LogoutIcon/>]
-  const TicketIconForPending = [<MessageIcon/>,<AccountBoxIcon/>,<LogoutIcon/>]
+  const TicketIconForPending = [<HomeIcon/>,<MessageIcon/>,<AccountBoxIcon/>,<LogoutIcon/>]
   const useMyContextData = useMyContext()
   const{userDetails} = useMyContextData;
   const navigate = useNavigate()
-   
+
+
   const handleDrawerClose = () => {
     setIsClosing(true);
     setMobileOpen(false);
@@ -79,7 +81,7 @@ function Navbar(props) {
    
       {userDetails.isAuthorisedField === 'approved' && (
         <>
-        <List sx={{marginLeft:'20px'}}>
+        <List sx={{marginLeft:'10px'}}>
          {['Home', 'My Tickets', 'Add Ticket', 'Messages' ,'My Profile',"Logout"].map((text, index) => (
            <ListItem key={text} disablePadding >
              <ListItemButton  onClick={()=>{ handleNavigate(`/profile/${text.toLowerCase()}`)}}>
@@ -97,8 +99,8 @@ function Navbar(props) {
 
 {userDetails.isAuthorisedField === 'pending' && (
         <>
-        <List sx={{marginLeft:'20px'}}>
-         {['Messages' ,'My Profile' ,'Logout'].map((text, index) => (
+        <List sx={{marginLeft:'10px'}}>
+         {['Home','Messages' ,'My Profile' ,'Logout'].map((text, index) => (
            <ListItem key={text} disablePadding >
              <ListItemButton onClick={()=>{ handleNavigate(`/profile/${text.toLowerCase()}`)}}>
                <ListItemIcon>
@@ -114,7 +116,6 @@ function Navbar(props) {
       }
 
      
-     
     </div>
   );
 
@@ -127,14 +128,14 @@ function Navbar(props) {
       <AppBar
         position="fixed"
         sx={{
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
-          ml: { sm: `${drawerWidth}px` },
+          width: { md: `calc(100% - ${drawerWidth}px)` },
+          ml: { md: `${drawerWidth}px` },
           boxShadow:'none',
           display:'flex',
           justifyContent:'center',
            backgroundColor:'rgb(174, 198, 205)',
            color:'white', 
-           height:'75px',
+           height:'70px',
         }}
         className='header'
       >
@@ -145,7 +146,7 @@ function Navbar(props) {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
+            sx={{ mr: 2, display: { md: 'none' } }}
           >
             <MenuIcon />
           </IconButton>
@@ -157,21 +158,21 @@ function Navbar(props) {
       </AppBar>
       <Box
         component="nav"
-        sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+        sx={{ width: { md: drawerWidth }, flexShrink: { md: 0 } }}
         aria-label="mailbox folders"
       >
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Drawer
           container={container}
-          variant="temporary"
-          open={mobileOpen}
+          open={mobileOpen} 
+          variant='temporary'
           onTransitionEnd={handleDrawerTransitionEnd}
           onClose={handleDrawerClose}
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
           sx={{
-            display: { xs: 'block', sm: 'none' },
+            display: {  xs: 'block', sm: 'block', md: 'none'},
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
           }}
         >
@@ -180,9 +181,8 @@ function Navbar(props) {
         <Drawer
           variant="permanent"
           sx={{
-            display: { xs: 'none', sm: 'block' },
+            display: { xs: 'none', sm: 'none', md: 'block'},
             '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
-             
           }}
           open
         >
@@ -191,9 +191,12 @@ function Navbar(props) {
       </Box>
       <Box
         component="main"
-        sx={{ flexGrow: 1, width: { sm: `calc(100% - ${drawerWidth}px)`} , marginTop:'10px'}} >
+        // className='main-box'
+        sx={{ flexGrow: 1, 
+        width: { sm: `calc(100% - ${drawerWidth}px)`}
+      }} >
         <Toolbar />
-        {userDetails.isAuthorisedField === 'approved' &&  (
+        {(userDetails.isAuthorisedField === 'approved' && userDetails.profileCompeleted) &&  (
         <>
         <Box  className='main-display-box'>
         <Routes>
@@ -208,12 +211,15 @@ function Navbar(props) {
 
         </>)}
 
-        {userDetails.isAuthorisedField === 'pending' &&  (
+       
+
+        {(!(userDetails.profileCompeleted) || userDetails.isAuthorisedField === 'pending') &&  (
         <>
         <Box className='main-display-box'>
           <Routes> 
-          <Route path='*' element={<div style={{ fontSize:"20px"}}>'Hii {userDetails.firstname} your account approval is under process. Please visit my profile page to Complete your profile'</div>}/>
+          <Route path='/home' element={<div style={{ fontSize:"20px"}}>'Hii {userDetails.firstname} your account approval is under process. Please visit my profile page to Complete your profile.Once you compelete your profile it will be sent for approval.'</div>}/>
           <Route path='/my profile' element={<MyProfile />}/>
+          <Route path='/messages' element={<Messages />}/>
           <Route path='logout' element={<Logout />}/>
         </Routes>
         </Box>

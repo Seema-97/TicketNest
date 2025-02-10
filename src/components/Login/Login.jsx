@@ -2,7 +2,7 @@
 import React, {useState } from 'react'
 import loginImg from '../../images/login-vector.png'
 import { useNavigate } from 'react-router-dom'
-import {auth, fireStoreDb} from '../../firebase.config'
+import {auth, fireStoreDb1} from '../../firebase.config'
 import { doc,getDoc} from 'firebase/firestore'
 import { useMyContext } from '../../context/context'
 
@@ -24,7 +24,7 @@ const{employeeId ,setEmployeeId} = useMyContextData ;
      try{
 
       //gettting the document which matches with entered employeeId
-      const userDoc = await getDoc(doc(fireStoreDb, "Users", localStorage.getItem("userEmployeeId")));
+      const userDoc = await getDoc(doc(fireStoreDb1, "Users", localStorage.getItem("userEmployeeId")));
 
             if (userDoc.exists()) {
                 const userData = userDoc.data();
@@ -71,7 +71,6 @@ const{employeeId ,setEmployeeId} = useMyContextData ;
           </div>
         </div>
           
-      
       </form>
     </div>
     </>

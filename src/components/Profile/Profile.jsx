@@ -1,6 +1,6 @@
 import { doc, getDoc} from 'firebase/firestore'
 import React, { useEffect, useState } from 'react'
-import { fireStoreDb } from '../../firebase.config'
+import { fireStoreDb1} from '../../firebase.config'
 import Navbar from '../Navbar/Navbar'
 import { useMyContext } from '../../context/context'
 
@@ -15,7 +15,7 @@ const Profile = () => {
 
     const fetchUserData = async() =>{
                  
-           const docRef = doc(fireStoreDb, "Users", localStorage.getItem('userEmployeeId'));
+           const docRef = doc(fireStoreDb1, "Users", localStorage.getItem('userEmployeeId'));
            const docSnap = await getDoc(docRef);
            if (docSnap.exists()) {
             setUserDetails(docSnap.data())
