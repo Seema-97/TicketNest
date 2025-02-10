@@ -16,8 +16,7 @@ const MyTickets = () => {
   
     const getTickets = async () => {
         try {
-        
-          
+    
             const docRef = query(collection(fireStoreDb1, 'Tickets'),
             where("employeeId", '==', userDetails.employeeId))
 

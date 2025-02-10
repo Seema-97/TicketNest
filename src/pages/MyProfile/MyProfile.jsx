@@ -232,7 +232,7 @@ const MyProfile = () => {
              {/* Display the uploaded profile picture */}
              {imageURL && (
             <div style={{textAlign:'center'}}>
-              <div><img src={imageURL} alt="Profile Pic" style={{ width: '230px', height: '230px', borderRadius: '50%' , objectFit:'cover'}} /></div>
+              <div><img src={imageURL} alt="Profile Pic" style={{ width: '230px', height: '230px', borderRadius: '50%' , objectFit:'contain'}} /></div>
                <input type="file" onChange={handleFileChange}/>
                <button onClick={uploadProfilePic} disabled={loading}>
                 {loading ? 'Uploading...' : 'Upload'}
