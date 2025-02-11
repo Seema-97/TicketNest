@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react'
-import './SignUP.css'
+import './SignUp.css'
 import loginImg from '../../images/login-vector.png'
 import { useNavigate } from 'react-router-dom'
 import { auth, fireStoreDb1} from '../../firebase.config'
